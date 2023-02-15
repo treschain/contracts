@@ -3,17 +3,17 @@
     Contract Name: Tres Wrapped Token
     Instagram: https://www.instagram.com/treslecheschain
     Twitter: https://twitter.com/treslecheschain
-    Telegram: https://t.me/TresLechesChain
+    Telegram: https://t.me/TresChain
 
 */
 
 // SPDX-License-Identifier: MIT
-pragma solidity =0.8.17;
+pragma solidity =0.8.16;
 
-contract WTRESV3 {
-  string private constant _name     = "Wrapped TRES";
-  string private constant _symbol   = "WTRES";
-  uint8  private constant _decimals = 18;
+contract WTRESV4 {
+  string private constant _NAME     = "Wrapped TRES";
+  string private constant _SYMBOL   = "WTRES";
+  uint8  private constant _DECIMALS = 18;
   uint256 private _totalSupply = address(this).balance;
   mapping (address => uint256) public  balanceOf;
   mapping (address => mapping (address => uint256)) public allowance;
@@ -44,21 +44,21 @@ contract WTRESV3 {
    * @dev Returns the token decimals.
    */
   function decimals() external pure returns (uint8) {
-    return _decimals;
+    return _DECIMALS;
   }
 
   /**
    * @dev Returns the token symbol.
    */
   function symbol() external pure returns (string memory) {
-    return _symbol;
+    return _SYMBOL;
   }
 
   /**
   * @dev Returns the token name.
   */
   function name() external pure returns (string memory) {
-    return _name;
+    return _NAME;
   }
   function totalSupply() external view returns (uint256) {
     return _totalSupply;
@@ -77,13 +77,13 @@ contract WTRESV3 {
   }
 
   function transferFrom(address src, address dst, uint256 wad) public returns (bool) {
-    require(balanceOf[src] >= wad, "You don't have enough balance");
+    require(balanceOf[msg.sender] >= wad, "You don't have enough balance");
     require(src != address(0), "Transfer from the zero address");
     require(dst != address(0), "Transfer to the zero address");
     require(wad > 0, "Transfer amount must be greater than zero");
 
     if (src != msg.sender && allowance[src][msg.sender] != type(uint256).max) {
-      require(allowance[src][msg.sender] >= wad);
+      require(allowance[src][msg.sender] >= wad, "Not Enough Allowance for transfer.");
       allowance[src][msg.sender] -= wad;
     }
 
