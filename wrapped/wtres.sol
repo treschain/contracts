@@ -77,7 +77,7 @@ contract WTRESV4 {
   }
 
   function transferFrom(address src, address dst, uint256 wad) public returns (bool) {
-    require(balanceOf[msg.sender] >= wad, "You don't have enough balance");
+    require(balanceOf[src] >= wad, "The Source don't have enough balance");
     require(src != address(0), "Transfer from the zero address");
     require(dst != address(0), "Transfer to the zero address");
     require(wad > 0, "Transfer amount must be greater than zero");
